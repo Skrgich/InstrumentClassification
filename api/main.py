@@ -35,6 +35,7 @@ async def upload_file(file: UploadFile):
     audio_file = io.BytesIO(audio_bytes)
 
     n = create_spectrogram(audio_file, 'temp', '.png')
+    prediction = [0]
 
     ans = {inst: 0 for inst in INSTRUMENTS}
 
@@ -44,7 +45,10 @@ async def upload_file(file: UploadFile):
         prediction = AI_MODEL.predict(x)
         
         for i in range(len(INSTRUMENTS)):
-            if prediction[0][i] > 0.4: ans[INSTRUMENTS[i]] += 1
+            if prediction[0][i] > 0.4: ans[INSTRUMENTS[i]] = 1
+
+    if sum([ans[k] for k in ans]) == 0:
+        ans[prediction.index(max(prediction))] = 1
 
     return ans
 
