@@ -1,0 +1,17 @@
+version: '3'
+
+services:
+  website:
+    build:
+      context: /web
+      dockerfile: Dockerfile
+    image: site
+    ports:
+      - "8501:8501"
+  api:
+    build:
+      context: /api
+      dockerfile: Dockerfile
+    image: api
+    ports:
+      - "80:80"

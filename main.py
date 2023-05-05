@@ -4,7 +4,7 @@ import librosa
 import io
 import os
 import keras.utils as image
-from funkcije import create_spectrogram
+from create_spectrogram import create_spectrogram
 from keras.models import load_model
 import matplotlib.pyplot as plt
 import numpy as np
@@ -37,21 +37,16 @@ async def upload_file(file: UploadFile):
     # print(1)
     n = create_spectrogram(audio_file, 'temp', '.png')
 
-    # print(2)
     ans = {inst: 0 for inst in INSTRUMENTS}
-    # print(ans.keys())
+    
     for i in range(n):
         x = np.array([image.img_to_array(image.load_img('temp{}.png'.format(i), target_size=(224, 224, 3)))])
-        # print(x)
-        # print(np.shape(x))  
+         
         prediction = AI_MODEL.predict(x)
-        # print(np.shape(prediction))
-        # print(prediction)
-        # ans = {}
+        
         for i in range(len(INSTRUMENTS)):
             if prediction[0][i] > 0.4: ans[INSTRUMENTS[i]] += 1
-            # else: ans[INSTRUMENTS[i]] = 0
-        # print(ans)
+        
     return ans
 
     y, sr = librosa.load(audio_file)
