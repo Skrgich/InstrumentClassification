@@ -2,13 +2,12 @@ FROM tiangolo/uvicorn-gunicorn-fastapi:python3.9
 
 WORKDIR /app
 
-COPY requirements.txt .
+COPY /api .
 
 RUN pip install --no-cache-dir -r requirements.txt
 
-COPY . .
-COPY ../Model_final/* .
-COPY ../create_spectrogram.py .
+COPY Model_final/* .
+COPY create_spectrogram.py .
 
 EXPOSE 80
 
