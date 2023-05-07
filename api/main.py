@@ -45,7 +45,7 @@ async def upload_file(file: UploadFile):
         prediction = AI_MODEL.predict(x)
         
         for i in range(len(INSTRUMENTS)):
-            if prediction[0][i] > 0.4: ans[INSTRUMENTS[i]] = 1
+            if prediction[0][i] > 0.5: ans[INSTRUMENTS[i]] = 1
 
     if sum([ans[k] for k in ans]) == 0:
         ans[prediction.index(max(prediction))] = 1

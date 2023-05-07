@@ -3,7 +3,7 @@ import os
 import json
 import keras.utils as image
 import numpy as np
-from funkcije import create_spectrogram
+from create_spectrogram import create_spectrogram
 from keras.models import load_model
 
 
@@ -30,6 +30,8 @@ for filename in os.listdir(folder_path):
         n = create_spectrogram(audio_file, 'temp', '.png')
 
         ans = {inst : 0 for inst in INSTRUMENTS}
+        # max_pred = 0
+        # max_inst = 0
 
         for i in range(n):
             x = np.array([image.img_to_array(image.load_img('temp{}.png'.format(i), target_size=(224, 224, 3)))])
@@ -39,6 +41,12 @@ for filename in os.listdir(folder_path):
             for i in range(len(INSTRUMENTS)):
                 if prediction[0][i] > 0.5:
                     ans[INSTRUMENTS[i]] = 1
+
+        
+        if sum([ans[k] for k in ans]) == 0:
+            for i in np.where(prediction[0] == max(prediction[0])):
+                ans[INSTRUMENTS[int(i)]] =1           
+
 
         test_prediction[filename[:-4]] = ans.copy()            
 

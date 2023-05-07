@@ -18,7 +18,7 @@ import requests
 import json
 
 def main():
-    st.title("File Uploader")
+    st.title("Audio classificator")
 
     # Allow user to upload a file
     uploaded_file = st.file_uploader("Choose a file", type=['wav'])
