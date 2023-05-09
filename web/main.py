@@ -3,7 +3,23 @@ import requests
 import json
 
 def main():
+    st.set_page_config(page_title = "π=4")
     st.title("Audio classificator")
+
+    hide_streamlit_style = """
+            <style>
+            #MainMenu {visibility: hidden;}
+            footer {visibility: hidden;}
+            footer:after {
+            content:'π=4'; 
+            font-size:xx-large;
+            visibility: visible;
+            display: block;
+            #background-color: red;
+            }
+            </style>
+            """
+    st.markdown(hide_streamlit_style, unsafe_allow_html=True) 
 
     uploaded_file = st.file_uploader("Choose a file", type=['wav'])
 
