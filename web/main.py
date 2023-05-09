@@ -30,7 +30,7 @@ def main():
         api_url = "http://api:80/upload"
         
 
-        response = requests.post(url = api_url, files={'file' : uploaded_file.getvalue()}, timeout= 5)
+        response = requests.post(url = api_url, files={'file' : uploaded_file.getvalue()}, timeout= 10)
         
 
         dictionary = response.json()
